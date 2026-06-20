@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-container">
+        <div class="gradient-blob blob-1"></div>
+        <div class="gradient-blob blob-2"></div>
+        <div class="gradient-blob blob-3"></div>
+        <canvas id="particleCanvas"></canvas>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">
+            <span class="theme-icon">🌙</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <span class="title-word">AI Resume</span>
+                    <span class="title-word">Builder</span>
+                </h1>
+                <p class="subtitle">Create a stunning resume with real-time preview</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" id="sampleDataBtn">
+                    <span class="btn-icon">✨</span> Sample Data
+                </button>
+                <button class="btn btn-primary" id="downloadBtn">
+                    <span class="btn-icon">📥</span> Download PDF
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Column - Form -->
+            <div class="form-section">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <h2>Resume Information</h2>
+                        <p class="card-subtitle">Fill in your details</p>
+                    </div>
+
+                    <!-- Personal Info -->
+                    <div class="form-group-section">
+                        <h3 class="section-title">Personal Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">Full Name</label>
+                                <input type="text" id="fullName" placeholder="Shayla Mostafiz Samara" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="samara.shayla@email.com" class="form-input">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" placeholder="+880 1575 044991" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" id="location" placeholder="Dhaka, Bangladesh" class="form-input">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="headline">Professional Headline</label>
+                            <input type="text" id="headline" placeholder="Senior Front-end Developer & UI/UX Designer" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="summary">Professional Summary</label>
+                            <textarea id="summary" placeholder="A brief overview of your professional background..." class="form-input" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="form-group-section">
+                        <h3 class="section-title">Skills</h3>
+                        <div class="skills-input-container">
+                            <input type="text" id="skillInput" placeholder="Add a skill (e.g., JavaScript)" class="form-input">
+                            <button class="btn btn-sm btn-primary" id="addSkillBtn">Add</button>
+                        </div>
+                        <div class="skills-list" id="skillsList"></div>
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="form-group-section">
+                        <h3 class="section-title">Experience</h3>
+                        <button class="btn btn-sm btn-secondary" id="addExperienceBtn">+ Add Experience</button>
+                        <div id="experienceList"></div>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="form-group-section">
+                        <h3 class="section-title">Education</h3>
+                        <button class="btn btn-sm btn-secondary" id="addEducationBtn">+ Add Education</button>
+                        <div id="educationList"></div>
+                    </div>
+
+                    <!-- Projects -->
+                    <div class="form-group-section">
+                        <h3 class="section-title">Projects</h3>
+                        <button class="btn btn-sm btn-secondary" id="addProjectBtn">+ Add Project</button>
+                        <div id="projectList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Preview -->
+            <div class="preview-section">
+                <div class="preview-card glass-card">
+                    <div class="preview-header">
+                        <h2 class="preview-title" id="previewName">Your Name</h2>
+                        <p class="preview-subtitle" id="previewHeadline">Professional Headline</p>
+                        <div class="preview-contact" id="previewContact">
+                            <span>📧 email@example.com</span>
+                            <span>📱 +1 (555) 000-0000</span>
+                            <span>📍 Location</span>
+                        </div>
+                    </div>
+
+                    <!-- Summary Section -->
+                    <div class="preview-section-content" id="summarySection" style="display: none;">
+                        <h3 class="preview-section-title">Professional Summary</h3>
+                        <p class="preview-text" id="previewSummary"></p>
+                    </div>
+
+                    <!-- Skills Section -->
+                    <div class="preview-section-content" id="skillsSection" style="display: none;">
+                        <h3 class="preview-section-title">Skills</h3>
+                        <div class="preview-skills" id="previewSkills"></div>
+                    </div>
+
+                    <!-- Experience Section -->
+                    <div class="preview-section-content" id="experienceSection" style="display: none;">
+                        <h3 class="preview-section-title">Professional Experience</h3>
+                        <div id="previewExperience"></div>
+                    </div>
+
+                    <!-- Education Section -->
+                    <div class="preview-section-content" id="educationSection" style="display: none;">
+                        <h3 class="preview-section-title">Education</h3>
+                        <div id="previewEducation"></div>
+                    </div>
+
+                    <!-- Projects Section -->
+                    <div class="preview-section-content" id="projectsSection" style="display: none;">
+                        <h3 class="preview-section-title">Projects</h3>
+                        <div id="previewProjects"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
